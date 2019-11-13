@@ -15,7 +15,7 @@ repository for convenience, so generation is only necessary if it's out of date.
 
 ## Screenshots
 ![light theme](https://cdn.discordapp.com/attachments/329404808643608586/644291595944067072/unknown.png)
-![dark theme](https://cdn.discordapp.com/attachments/329404808643608586/644289540730912801/unknown.png)
+![dark theme](https://media.discordapp.net/attachments/329404808643608586/644292579835248705/unknown.png)
 
 ## Special thanks
 
