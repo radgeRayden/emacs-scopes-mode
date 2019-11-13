@@ -19,6 +19,6 @@ repository for convenience, so generation is only necessary if it's out of date.
 
 ## Special thanks
 
-- @flatwhatson for the help with the comment highlighting regex.
-- @hlissner for general emacs help; The indentation routine was also written
+- [@flatwhatson](https://github.com/flatwhatson) for the help with the comment highlighting regex.
+- [@hlissner](https://github.com/hlissner) for general emacs help; The indentation routine was also written
   while looking at the `pug-mode` package for reference.
