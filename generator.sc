@@ -1,5 +1,5 @@
 # Usage: `scopes generator.sc > scopes-symbols.el'
-import .scopes-std-symbols.symbols
+symbols := (import .scopes-std-symbols.symbols)
 
 # header
 print
