@@ -1,0 +1,3 @@
+[submodule "scopes-std-symbols"]
+	path = scopes-std-symbols
+	url = https://github.com/radgeRayden/scopes-std-symbols
