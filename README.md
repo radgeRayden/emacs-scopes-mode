@@ -14,7 +14,7 @@ actions are needed. A pre generated version is already included in the
 repository for convenience, so generation is only necessary if it's out of date.
 
 ## Screenshots
-![light theme](https://cdn.discordapp.com/attachments/329404808643608586/644288603022819329/unknown.png)
+![light theme](https://cdn.discordapp.com/attachments/329404808643608586/644291595944067072/unknown.png)
 ![dark theme](https://cdn.discordapp.com/attachments/329404808643608586/644289540730912801/unknown.png)
 
 ## Special thanks
