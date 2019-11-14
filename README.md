@@ -14,9 +14,11 @@ actions are needed. A pre generated version is already included in the
 repository for convenience, so generation is only necessary if it's out of date.
 
 ## Screenshots
+![light theme](https://cdn.discordapp.com/attachments/329404808643608586/644291595944067072/unknown.png)
+![dark theme](https://media.discordapp.net/attachments/329404808643608586/644292579835248705/unknown.png)
 
 ## Special thanks
 
-- @flatwhatson for the help with the comment highlighting regex.
-- @hlissner for general emacs help; The indentation routine was also written
+- [@flatwhatson](https://github.com/flatwhatson) for the help with the comment highlighting regex.
+- [@hlissner](https://github.com/hlissner) for general emacs help; The indentation routine was also written
   while looking at the `pug-mode` package for reference.
