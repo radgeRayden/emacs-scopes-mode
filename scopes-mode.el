@@ -172,7 +172,7 @@ Will align column to next multiple of four, up to 'current-indentation' + 4."
                         (beginning-of-line)
                         (if (not (bobp))
                             (progn
-                              (re-search-backward "[^ ]")
+                              (re-search-backward "[^ ]" nil t)
                               (current-indentation))
                             0)))
          (cur-indent (save-excursion (forward-to-indentation 0)))
@@ -215,7 +215,7 @@ Will align column to next multiple of four, up to 'current-indentation' + 4."
                                  (forward-line -1)
                                  (beginning-of-line)
                                  ;; FIXME: supress error message when search fails.
-                                 (re-search-forward scopes-new-code-block-regexp prev-line-end-point))))
+                                 (re-search-forward scopes-new-code-block-regexp prev-line-end-point t))))
                   (if new-block-p
                       (indent-line-to max-indent)
                       (indent-line-to prev-indent)))
