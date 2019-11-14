@@ -138,31 +138,95 @@
     (modify-syntax-entry ?\; "." table)
     table))
 
-;; FIXME: look for previous indentation until finding a non empty line.
+(defvar scopes-new-code-block-regexp
+  (rx
+   (or
+    ;; wish this could be generated! It requires manual cherry picking anyways.
+    ;; of course for a few like `if' it would be useful to check if there isn't a multiline
+    ;; parentheses going on, but I'll leave that to some other time.
+    (: line-start (* whitespace) (or "else"
+                                     "elseif"
+                                     "then"
+                                     "case"
+                                     "pass"
+                                     "default"
+                                     "except"
+                                     "fn"
+                                     "inline"
+                                     "label"
+                                     "do"
+                                     "embed"
+                                     "try"
+                                     "loop"
+                                     "spice-quote"
+                                     "if"
+                                     "switch"))
+    ;; dangling equal sign
+    (: "=" (* " ") line-end))))
+
 (defun scopes-indent-line ()
   "Indent code in multiples of four spaces.
 Will align column to next multiple of four, up to 'current-indentation' + 4."
   (interactive "*")
-  (let* ((prev-indent (save-excursion (re-search-backward "^[^\n]") (current-indentation)))
-        ;; (column (current-column))
-        ;; FIXME: there's probably a function / macro that does this "if true return" nicely
-        (first-non-blank (save-excursion (forward-to-indentation 0)))
-        (first-non-blank (if first-non-blank first-non-blank 0))
-        (next-align (+ first-non-blank (- 4 (% first-non-blank 4)))))
+  (let* ((prev-indent (save-excursion
+                        (beginning-of-line)
+                        (if (not (bobp))
+                            (progn
+                              (re-search-backward "[^ ]")
+                              (current-indentation))
+                            0)))
+         (cur-indent (save-excursion (forward-to-indentation 0)))
+         (blank-line-p (save-excursion (beginning-of-line) (looking-at "[[:space:]]*$")))
+         (column-before-indent (current-column)))
+    ;;is this the first line? just indent everything to 0.
+    (if (save-excursion (beginning-of-line) (bobp))
+      (indent-line-to 0)
+      (let* ((next-align (+ cur-indent (- 4 (% cur-indent 4))))
+            (aligned-p (save-excursion
+                        (forward-to-indentation 0)
+                        (= (current-column) next-align)))
+            (max-indent (+ prev-indent 4)))
+        (message (number-to-string column-before-indent))
+        ;; are we indenting an already written line?
+      (if (not blank-line-p)
+          ;; then we don't assume intention, and understand that the user might want to indent
+          ;; to anywhere between where the text currently is and previous line indentation
+          ;; + 4.
+            ;; are we past indentation limit?
+            (if (>= cur-indent max-indent)
+              (indent-line-to max-indent)
+              ;; add a level if we're already aligned, or align it.
+              (if aligned-p
+                  (indent-line-to (+ cur-indent 4))
+                  (indent-line-to next-align)))
+        ;; otherwise, indent directly to previous indentation, or max-indent if we're already there/past it.
+        ;; this assumes that the user most commonly wants to preserve indentation even if they have
+        ;; a one-line breathing space - if they want to reset indentation it's fine to use backspace and
+        ;; do a fine adjustment.
 
-    (save-excursion
-      (beginning-of-line)
-      (cond
-        ;; are we at the start of the buffer?
-        ((bobp)
-        (indent-line-to 0))
-        ((looking-at "[[:space:]]*$")
-          (indent-line-to prev-indent))
-        ;; TODO: if cursor is in the middle of the line, should just insert tabs.
-        ;; can indent more!
-        ((< first-non-blank (+ prev-indent 4))
-         (indent-line-to next-align))
-        (indent-line-to (+ prev-indent 4)))))
+        ;; are we on an entirely new line?
+        (if (= column-before-indent 0)
+            ;; Check if new block or continue previous block.
+            (let* ((prev-line-end-point (save-excursion
+                                         (forward-line -1)
+                                         (end-of-line)
+                                         (point)))
+                  (new-block-p (save-excursion
+                                 (forward-line -1)
+                                 (beginning-of-line)
+                                 ;; FIXME: supress error message when search fails.
+                                 (re-search-forward scopes-new-code-block-regexp prev-line-end-point))))
+                  (if new-block-p
+                      (indent-line-to max-indent)
+                      (indent-line-to prev-indent)))
+            ;; otherwise, align or indent forward.
+            (if (>= cur-indent max-indent)
+              (indent-line-to max-indent)
+              ;; add a level if we're already aligned, or align it.
+              (if aligned-p
+                  (indent-line-to (+ cur-indent 4))
+                  (indent-line-to next-align)))
+            (indent-line-to max-indent))))))
     (if (< (current-column) (current-indentation))
         (forward-to-indentation 0)))
 
