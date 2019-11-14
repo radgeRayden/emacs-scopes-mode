@@ -199,10 +199,6 @@ Will align column to next multiple of four, up to 'current-indentation' + 4."
               (if aligned-p
                   (indent-line-to (+ cur-indent 4))
                   (indent-line-to next-align)))
-        ;; otherwise, indent directly to previous indentation, or max-indent if we're already there/past it.
-        ;; this assumes that the user most commonly wants to preserve indentation even if they have
-        ;; a one-line breathing space - if they want to reset indentation it's fine to use backspace and
-        ;; do a fine adjustment.
 
         ;; are we on an entirely new line?
         (if (= column-before-indent 0)
@@ -214,7 +210,6 @@ Will align column to next multiple of four, up to 'current-indentation' + 4."
                   (new-block-p (save-excursion
                                  (forward-line -1)
                                  (beginning-of-line)
-                                 ;; FIXME: supress error message when search fails.
                                  (re-search-forward scopes-new-code-block-regexp prev-line-end-point t))))
                   (if new-block-p
                       (indent-line-to max-indent)
