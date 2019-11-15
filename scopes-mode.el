@@ -144,7 +144,8 @@
     ;; wish this could be generated! It requires manual cherry picking anyways.
     ;; of course for a few like `if' it would be useful to check if there isn't a multiline
     ;; parentheses going on, but I'll leave that to some other time.
-    (: line-start (* whitespace) (or "else"
+    (: line-start (* whitespace) (or "if"
+                                     "else"
                                      "elseif"
                                      "then"
                                      "case"
@@ -158,8 +159,10 @@
                                      "embed"
                                      "try"
                                      "loop"
+                                     "for"
+                                     "fold"
+                                     "while"
                                      "spice-quote"
-                                     "if"
                                      "switch"))
     ;; dangling equal sign
     (: "=" (* " ") line-end))))
