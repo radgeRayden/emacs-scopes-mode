@@ -169,7 +169,7 @@
 
 (defun scopes-indent-line ()
   "Indent code in multiples of four spaces.
-Will align column to next multiple of four, up to 'current-indentation' + 4."
+Will align column to next multiple of four, up to previous line indentation + 4."
   (interactive "*")
   (let* ((prev-indent (save-excursion
                         (beginning-of-line)
