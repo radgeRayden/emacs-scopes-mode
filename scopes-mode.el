@@ -175,7 +175,7 @@ Will align column to next multiple of four, up to previous line indentation + 4.
                         (beginning-of-line)
                         (if (not (bobp))
                             (progn
-                              (re-search-backward "[^ ]" nil t)
+                              (re-search-backward "[^ \n]" nil t)
                               (current-indentation))
                             0)))
          (cur-indent (save-excursion (forward-to-indentation 0)))
@@ -189,7 +189,7 @@ Will align column to next multiple of four, up to previous line indentation + 4.
                         (forward-to-indentation 0)
                         (= (current-column) next-align)))
             (max-indent (+ prev-indent 4)))
-        (message (number-to-string column-before-indent))
+       
         ;; are we indenting an already written line?
       (if (not blank-line-p)
           ;; then we don't assume intention, and understand that the user might want to indent
@@ -238,9 +238,12 @@ Will align column to next multiple of four, up to previous line indentation + 4.
   (setq-local comment-end "")
   (setq-local comment-add 0)
   (setq-local comment-use-syntax nil)
+  (setq-local electric-indent-inhibit t)
   ;; TODO: change to a custom indent function that behaves differently inside a
   ;; parenthesized expression
   (setq-local indent-line-function 'scopes-indent-line)
+  (electric-indent-local-mode -1)
+  ;; (setq-)
   (setq font-lock-multiline t
         font-lock-defaults '((scopes-font-lock-keywords) t)))
 
