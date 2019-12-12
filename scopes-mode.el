@@ -132,6 +132,7 @@
 (defvar scopes-mode-syntax-table
   (let ((table (make-syntax-table)))
     (modify-syntax-entry ?@  "_" table)
+    (modify-syntax-entry ?|  "_" table)
     (modify-syntax-entry ?:  "_" table)
     (modify-syntax-entry ?.  "_" table)
     (modify-syntax-entry ?#  "<" table)
@@ -166,6 +167,9 @@
                                      "switch"))
     ;; dangling equal sign
     (: "=" (* " ") line-end))))
+
+(defvar scopes-end-code-block-regexp
+  (rx ""))
 
 (defun scopes-indent-line ()
   "Indent code in multiples of four spaces.
