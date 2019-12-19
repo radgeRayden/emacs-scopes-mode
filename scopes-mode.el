@@ -114,7 +114,7 @@
               (: "0o" (or (: (+ (any "0-7")) ".") (: "." (+ (any "0-7"))) (: (+ (any "0-7")) "." (+ (any "0-7")))))
               ;; hex prefix
               (: "0x" (or (: (+ hex-digit) ".") (: "." (+ hex-digit)) (: (+ hex-digit) "." (+ hex-digit)))))
-             (opt (: (any "eE") (any "+-") (+ digit)))
+             (opt (: "e" (any "+-") (+ digit)))
              (opt (or ":f32" ":f64"))))
             symbol-end) . scopes-number-font-face)
 

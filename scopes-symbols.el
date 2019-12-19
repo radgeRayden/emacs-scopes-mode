@@ -1213,6 +1213,8 @@
 (defvar scopes-symbols-global-symbols '(
    "main-module?"
    "module-dir"
+   "module-path"
+   "module-name"
    "pi:f32"
    "pi:f64"
    "pi"
