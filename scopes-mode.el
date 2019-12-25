@@ -164,12 +164,21 @@
                                      "fold"
                                      "while"
                                      "spice-quote"
-                                     "switch"))
+                                     "switch"
+                                     "::"))
     ;; dangling equal sign
     (: "=" (* " ") line-end))))
 
 (defvar scopes-end-code-block-regexp
-  (rx ""))
+  (rx (: line-start
+         (* whitespace)
+         (or
+          "return"
+          "break"
+          "repeat"
+          "continue"
+          "merge")
+         (or ";" (: (+ whitespace) (not whitespace))))))
 
 (defun scopes-indent-line ()
   "Indent code in multiples of four spaces.
@@ -192,43 +201,54 @@ Will align column to next multiple of four, up to previous line indentation + 4.
             (aligned-p (save-excursion
                         (forward-to-indentation 0)
                         (= (current-column) next-align)))
-            (max-indent (+ prev-indent 4)))
+            (max-indent (+ prev-indent 4))
+            (closest-lower-indent
+             (let
+                 ((lower-than-prev (- prev-indent 4)))
+                  (if (>= lower-than-prev 0)
+                      lower-than-prev
+                      0))))
        
         ;; are we indenting an already written line?
-      (if (not blank-line-p)
+        (if (not blank-line-p)
           ;; then we don't assume intention, and understand that the user might want to indent
           ;; to anywhere between where the text currently is and previous line indentation
           ;; + 4.
-            ;; are we past indentation limit?
-            (if (>= cur-indent max-indent)
-              (indent-line-to max-indent)
-              ;; add a level if we're already aligned, or align it.
-              (if aligned-p
-                  (indent-line-to (+ cur-indent 4))
-                  (indent-line-to next-align)))
+          ;; are we past indentation limit?
+          (if (>= cur-indent max-indent)
+            (indent-line-to max-indent)
+            ;; add a level if we're already aligned, or align it.
+            (if aligned-p
+                (indent-line-to (+ cur-indent 4))
+                (indent-line-to next-align)))
 
-        ;; are we on an entirely new line?
-        (if (= column-before-indent 0)
-            ;; Check if new block or continue previous block.
-            (let* ((prev-line-end-point (save-excursion
-                                         (forward-line -1)
-                                         (end-of-line)
-                                         (point)))
-                  (new-block-p (save-excursion
-                                 (forward-line -1)
-                                 (beginning-of-line)
-                                 (re-search-forward scopes-new-code-block-regexp prev-line-end-point t))))
-                  (if new-block-p
-                      (indent-line-to max-indent)
-                      (indent-line-to prev-indent)))
-            ;; otherwise, align or indent forward.
-            (if (>= cur-indent max-indent)
-              (indent-line-to max-indent)
-              ;; add a level if we're already aligned, or align it.
-              (if aligned-p
-                  (indent-line-to (+ cur-indent 4))
-                  (indent-line-to next-align)))
-            (indent-line-to max-indent))))))
+          ;; are we on an entirely new line?
+          (if (= column-before-indent 0)
+              ;; Check if new block or continue previous block.
+              (let* ((prev-line-end-point (save-excursion
+                                          (forward-line -1)
+                                          (end-of-line)
+                                          (point)))
+                    (new-block-p (save-excursion
+                                  (forward-line -1)
+                                  (beginning-of-line)
+                                  (re-search-forward scopes-new-code-block-regexp prev-line-end-point t)))
+                    (end-block-p (save-excursion
+                                  (forward-line -1)
+                                  (beginning-of-line)
+                                  (re-search-forward scopes-end-code-block-regexp prev-line-end-point t))))
+                (cond
+                (new-block-p (indent-line-to max-indent))
+                (end-block-p (indent-line-to closest-lower-indent))
+                (t           (progn (indent-line-to prev-indent)))))
+
+              ;; otherwise, align or indent forward.
+              (if (>= cur-indent max-indent)
+                (indent-line-to max-indent)
+                ;; add a level if we're already aligned, or align it.
+                (if aligned-p
+                    (indent-line-to (+ cur-indent 4))
+                    (indent-line-to next-align))))))))
     (if (< (current-column) (current-indentation))
         (forward-to-indentation 0)))
 
