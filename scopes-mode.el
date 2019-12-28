@@ -84,9 +84,9 @@
         ;; FIXME: use a parsing function instead of regexes, as every approach has been flawed somehow.
         ;; for example, here we can't highlight escapes inside strings without jumping through hoops, but could be done with a function.
         ;; inline strings
+        (,(rx (: "\"" (*? (not (any "\n"))) (: (not (any "\\")) "\""))) . font-lock-string-face)
         ;; to make things easier, empty string is a special case.
         (,(rx "\"\"") . font-lock-string-face)
-        (,(rx (: "\"" (*? (not (any "\n"))) (: (not (any "\\")) "\""))) . font-lock-string-face)
 
         ;; number literals
         (,(rx
