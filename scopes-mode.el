@@ -166,7 +166,6 @@
                                      "fold"
                                      "while"
                                      "spice-quote"
-                                     "switch"
                                      "::"))
     ;; dangling equal sign
     (: "=" (* " ") line-end))))
