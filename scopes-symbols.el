@@ -774,7 +774,8 @@
    "gen-argument-matcher"
    "encoder"
    "decoder"
-   "property"))
+   "property"
+   "Option"))
 (defvar scopes-symbols-operators '(
    "->"
    "**"
@@ -1039,7 +1040,8 @@
    "Map"
    "MapError"
    "One"
-   "Property"))
+   "Property"
+   "UnwrapError"))
 (defvar scopes-symbols-sugar-macros '(
    "include"
    "static-match"
