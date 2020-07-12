@@ -780,12 +780,12 @@
    "demux"
    "retain"
    "permutate-range"
+   "Option"
+   "property"
    "parse-argument-matcher"
    "gen-argument-matcher"
    "encoder"
-   "decoder"
-   "property"
-   "Option"))
+   "decoder"))
 (defvar scopes-symbols-operators '(
    "->"
    "**"
@@ -1086,9 +1086,14 @@
    "DrawArraysIndirectCommand"
    "Map"
    "MapError"
-   "One"
+   "UnwrapError"
    "Property"
-   "UnwrapError"))
+   "Rc"
+   "Weak"
+   "UpgradeError"
+   "Set"
+   "String"
+   "One"))
 (defvar scopes-symbols-sugar-macros '(
    "include"
    "dispatch"
@@ -1142,6 +1147,7 @@
    "decorate-capture"
    "capture"
    "spice-capture"
+   "-->"
    "enum"
    "decorate-fnchain"
    "fnchain"
