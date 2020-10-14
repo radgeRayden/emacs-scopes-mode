@@ -166,6 +166,8 @@
                                      "fold"
                                      "while"
                                      "spice-quote"
+                                     "enum"
+                                     "struct"
                                      "::"))
     ;; dangling equal sign
     (: "=" (* " ") line-end))))
