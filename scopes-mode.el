@@ -104,6 +104,7 @@
                 (: "0o" (+ (any "0-7")))
                 ;;hex
                 (: "0x" (+ hex-digit)))
+              (opt (: "e" (opt (any "+-")) (+ digit)))
               (opt (: ":" (or (: "f" (or "32" "64"))  (: (any "ui") (or "8" "16" "32" "64")) "usize"))))
             (:
             ;; floats with fractional part
@@ -116,7 +117,7 @@
               (: "0o" (or (: (+ (any "0-7")) ".") (: "." (+ (any "0-7"))) (: (+ (any "0-7")) "." (+ (any "0-7")))))
               ;; hex prefix
               (: "0x" (or (: (+ hex-digit) ".") (: "." (+ hex-digit)) (: (+ hex-digit) "." (+ hex-digit)))))
-             (opt (: "e" (any "+-") (+ digit)))
+             (opt (: "e" (opt (any "+-")) (+ digit)))
              (opt (or ":f32" ":f64"))))
             symbol-end) . scopes-number-font-face)
 
