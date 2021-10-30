@@ -14,6 +14,35 @@ The elisp library itself is already set up to use that file so no further
 actions are needed. A pre generated version is already included in the
 repository for convenience, so generation is only necessary if it's out of date.
 
+Then to load `scopes-mode` add the following to you `init.el` or
+similar startup file:
+
+```elisp
+(load "path/to/scopes-mode.el")
+```
+
+Or if you have a `load-path` already defined e.g.:
+
+```elisp
+(add-to-list 'load-path "~/.emacs.d/libs")
+```
+
+You can copy or symlink `scopes-mode.el` and `scopes-symbols.el` to
+`~/.emacs.d/libs` folder and then just add the following line to your
+config:
+
+```elisp
+(require 'scopes-mode)
+```
+
+Then to have scopes mode activated automatically when opening a file
+you can add the following:
+
+```elisp
+(add-to-list 'auto-mode-alist '("\\.sc\\'" . scopes-mode))
+(add-to-list 'auto-mode-alist '("\\.scopes\\'" . scopes-mode))
+```
+
 ## Screenshots
 ![light theme](https://cdn.discordapp.com/attachments/329404808643608586/644291595944067072/unknown.png)
 ![dark theme](https://media.discordapp.net/attachments/329404808643608586/644292579835248705/unknown.png)
