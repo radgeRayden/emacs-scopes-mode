@@ -1319,6 +1319,7 @@
    "module-dir"
    "module-path"
    "module-name"
+   "console?"
    "project-dir"
    "package.path"
    "package.library-path"
