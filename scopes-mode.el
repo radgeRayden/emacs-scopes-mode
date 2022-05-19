@@ -86,7 +86,7 @@
         ;; inline strings
         ;; to make things easier, empty string is a special case.
         (,(rx "\"\"") . font-lock-string-face)
-        (,(rx (: "\"" (+ (: (*? not-newline) (opt "\\\"")))  "\"")) . font-lock-string-face)
+        (,(rx (: "\"" (+ (or not-newline "\\\""))  "\"")) . font-lock-string-face)
 
         ;; number literals
         (,(rx
