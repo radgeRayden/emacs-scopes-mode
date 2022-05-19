@@ -1,9 +1,9 @@
 ;;; scopes-mode.el --- Major mode for editing Scopes code. -*- coding: utf-8; lexical-binding: t; -*-
 
-;; Copyright © 2019, by Westerbly (radgeRayden) Snaydley
+;; Copyright © 2022, by Westerbly (radgeRayden) Snaydley
 
 ;; Author: Westerbly Snaydley (westerbly@gmail.com)
-;; Version: 0.1.0
+;; Version: 0.2.0
 ;; Created: 2019-11-10
 ;; Keywords: languages
 
