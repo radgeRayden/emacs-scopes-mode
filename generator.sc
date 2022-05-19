@@ -13,7 +13,7 @@ inline generate-keyword-list-binding (kind)
         "(defvar scopes-symbols-"
         kind as string
         " '("
-        fold (str = "") for k v in (getattr symbols kind)
+        fold (str = str"") for k v in (getattr symbols kind)
             # indentation hardcoded, because lazy
             .. str "\n   " (tostring (v as string))
         "))"
