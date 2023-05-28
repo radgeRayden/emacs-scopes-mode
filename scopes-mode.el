@@ -91,7 +91,7 @@
         ;; number literals
         (,(rx
            symbol-start
-           (opt (any "+-"))
+           (opt (any "+-~"))
            (or
             (:
               ;; no fractional part
