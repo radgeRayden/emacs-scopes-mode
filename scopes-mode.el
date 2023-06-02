@@ -3,7 +3,7 @@
 ;; Copyright © 2023, by Westerbly (radgeRayden) Snaydley
 
 ;; Author: Westerbly Snaydley (westerbly@gmail.com)
-;; Version: 0.3.0
+;; Version: 0.3.1
 ;; Created: 2019-11-10
 ;; Keywords: languages
 
@@ -91,7 +91,8 @@
         ;; number literals
         (,(rx
            symbol-start
-           (opt (any "+-~"))
+           (opt "~")
+           (opt (any "+-"))
            (or
             (:
               ;; no fractional part
