@@ -172,7 +172,7 @@
                                      "struct"
                                      "::"))
     ;; dangling equal sign
-    (: "=" (* " ") line-end))))
+    (: (or "=" ":=") (* " ") line-end))))
 
 (defvar scopes-end-code-block-regexp
   (rx (: line-start
