@@ -3,7 +3,7 @@
 ;; Copyright © 2023, by Westerbly (radgeRayden) Snaydley
 
 ;; Author: Westerbly Snaydley (westerbly@gmail.com)
-;; Version: 0.3.1
+;; Version: 0.4.0
 ;; Created: 2019-11-10
 ;; Keywords: languages
 
@@ -275,6 +275,14 @@ Will align column to next multiple of four, up to previous line indentation + 4.
   ;; (setq-)
   (setq font-lock-multiline t
         font-lock-defaults '((scopes-font-lock-keywords) t)))
+
+(require 'compile)
+(add-to-list 'compilation-error-regexp-alist
+             'scopes)
+(add-to-list
+ 'compilation-error-regexp-alist-alist
+ '(scopes
+   "◆ \\(.+?\\):\\([0-9]+\\)\\:\\([0-9]+\\)\\:\*" 1 2 3))
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.sc\\'" . scopes-mode))
